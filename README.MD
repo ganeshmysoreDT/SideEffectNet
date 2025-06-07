@@ -167,3 +167,14 @@ The knowledge graph constructed by SideEffectNet contains:
 
 These statistics highlight the scale of the graph and the depth of relationships analyzed within the project.
 
+## Data Sources
+
+The raw datasets used in this project were sourced from:
+
+1. **SIDER Dataset**:
+   - A comprehensive dataset for drug-side effect relationships.
+   - [Learn more about SIDER](https://paperswithcode.com/dataset/sider).
+
+2. **Side Effects Database**:
+   - TSV files (`drug_names.tsv`, `meddra_all_se.tsv`, `meddra_freq.tsv`) were downloaded from [http://sideeffects.embl.de/download/](http://sideeffects.embl.de/download/).
+
