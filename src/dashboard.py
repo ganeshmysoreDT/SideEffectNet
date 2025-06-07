@@ -17,15 +17,10 @@ import streamlit.components.v1 as components
 from pathlib import Path
 import plotly.express as px
 import plotly.graph_objects as go
-from st_aggrid import AgGrid, GridOptionsBuilder
 import tempfile
 from google import genai
 from dotenv import load_dotenv
 import os
-import io
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from fpdf import FPDF
 
 load_dotenv()
 
