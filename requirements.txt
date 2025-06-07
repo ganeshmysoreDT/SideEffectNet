@@ -1,0 +1,12 @@
+streamlit
+pandas
+networkx
+pyvis
+plotly
+st-aggrid
+google-genai
+dotenv
+reportlab
+fpdf
+matplotlib
+colorama

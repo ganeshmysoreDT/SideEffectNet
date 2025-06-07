@@ -342,7 +342,15 @@ with tab2:
                     data_return_mode='AS_INPUT',
                     update_mode='MODEL_CHANGED',
                     fit_columns_on_grid_load=True,
-                    theme='streamlit'
+                    theme='streamlit',
+                    custom_css={
+                        ".ag-body.ag-layout-normal": {
+                            "width": "100% !important",
+                            "height": "100% !important",
+                            "margin": "0",
+                            "padding": "0"
+                        }
+                    }
                 )
 
             else:
@@ -417,14 +425,6 @@ with tab3:
         gb.configure_column(col, header_name=col, editable=False, cellStyle={'backgroundColor': '#f9f9f9', 'color': '#333333'})
     grid_options = gb.build()
 
-    st.markdown("""
-    <style>
-        .ag-header {
-            text-align: right !important;
-            margin: 0 !important;
-        }
-    </style>
-    """, unsafe_allow_html=True)
 
     AgGrid(
         filtered,
@@ -434,7 +434,15 @@ with tab3:
         data_return_mode='AS_INPUT',
         update_mode='MODEL_CHANGED',
         fit_columns_on_grid_load=True,
-        theme='streamlit'
+        theme='streamlit',
+        custom_css={
+            ".ag-body.ag-layout-normal": {
+                "width": "100% !important",
+                "height": "100% !important",
+                "margin": "0",
+                "padding": "0"
+            }
+        }
     )
 
 ############################################

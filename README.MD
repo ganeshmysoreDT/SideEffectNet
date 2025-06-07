@@ -1,27 +1,65 @@
-# Eliza AI Plugin Framework
+# SideEffectNet
 
 ## Overview
-The Eliza AI Plugin Framework is an intelligent scientific assistant designed to solve specific scientific problems and provide particular capabilities. The framework consists of self-contained plugins that:
-
-- Solve specific scientific problems.
-- Connect to Eliza through standardized interfaces.
-- Can be developed independently but work together in the larger ecosystem.
+SideEffectNet is an intelligent scientific assistant designed to analyze drug safety and visualize drug-side effect relationships. It provides tools for risk analysis, hypothesis generation, and data visualization, making it a powerful platform for pharmacological research and decision-making.
 
 ## Features
-- **Risk Analysis**: Analyze drug risk scores and side effects.
-- **Hypothesis Generation**: Generate scientific hypotheses for drug combinations.
-- **Graph Visualization**: Visualize drug-side effect relationships.
-- **Data Validation**: Validate the integrity of data files.
-- **PDF Report Generation**: Create PDF reports for drug risk analysis.
+- **Drug Risk Analysis**: Analyze risk scores and side effects for individual drugs.
+- **Drug Interaction Analysis**: Identify shared side effects between drug combinations.
+- **Risk Visualization**: Generate bar charts and network graphs to visualize drug risk scores and relationships.
+- **Polypharmacy Risk Detection**: Detect potential risks when combining multiple medications.
+- **Hypothesis Generation**: Generate scientifically validated hypotheses for drug combinations.
+
+## Project Structure
+```
+sideeffectnet/
+├── data/
+│   ├── processed/
+│   │   ├── drug_risk_scores.csv
+│   │   └── side_effects_clean.csv
+│   ├── raw/
+│   │   ├── drug_names.tsv
+│   │   ├── meddra_all_se.tsv
+│   │   └── meddra_freq.tsv
+├── lib/
+│   ├── bindings/
+│   │   └── utils.js
+│   ├── tom-select/
+│   │   ├── tom-select.complete.min.js
+│   │   └── tom-select.css
+│   ├── vis-9.1.2/
+│   │   ├── vis-network.css
+│   │   └── vis-network.min.js
+├── media/
+│   └── sideeffectnetlogo.png
+├── notebooks/
+├── src/
+│   ├── analytics.py
+│   ├── dashboard.py
+│   ├── data_processing.py
+│   ├── graph_builder.py
+│   ├── plugin.py
+│   ├── risk_analyzer.py
+│   ├── utils.py
+│   ├── visualize_graph.py
+│   └── __pycache__/
+├── drug_risk_scores.csv
+├── main.py
+├── README.MD
+├── requirements.txt
+├── risk_analysis_report.pdf
+├── risk_scores_graph.html
+└── sideeffectnet_graph.html
+```
 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/sideeffectnet.git
+   git clone https://github.com/ganeshmysoreDT/SideEffectNet.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd sideeffectnet
+   cd SideEffectNet
    ```
 3. Install dependencies:
    ```bash
@@ -29,57 +67,123 @@ The Eliza AI Plugin Framework is an intelligent scientific assistant designed to
    ```
 
 ## Usage
-### Command Line Interface
-Interact with the plugins using the CLI:
+### Running the CLI
+1. Run the main script:
+   ```bash
+   python src/plugin.py
+   ```
+2. Follow the prompts to select actions such as:
+   - Analyze Risk
+   - Generate Hypotheses
+   - Generate PDF
+   - Validate Data
+   - Generate Graph
 
-```bash
-python3 src/plugin.py <action> [options]
-```
+### Running the Dashboard
+1. Start the Streamlit dashboard:
+   ```bash
+   streamlit run src/dashboard.py
+   ```
+2. Open the dashboard in your browser to explore drug-side effect relationships and risk scores.
 
-### Actions
-- `analyze_risk`: Analyze the risk score and side effects for a drug.
-  ```bash
-  python3 src/plugin.py analyze_risk --drug_name "Aspirin"
-  ```
-- `generate_hypotheses`: Generate scientific hypotheses for drug combinations.
-  ```bash
-  python3 src/plugin.py generate_hypotheses --drug_a "Aspirin" --drug_b "Ibuprofen"
-  ```
-- `generate_pdf`: Create a PDF report for drug risk analysis.
-  ```bash
-  python3 src/plugin.py generate_pdf --drug_a "Aspirin" --drug_b "Ibuprofen"
-  ```
-- `validate_data`: Validate the integrity of a data file.
-  ```bash
-  python3 src/plugin.py validate_data --file_path "data/processed/side_effects_clean.csv"
-  ```
-- `generate_graph`: Visualize drug-side effect relationships.
-  ```bash
-  python3 src/plugin.py generate_graph --graph_data "graph_data.json"
-  ```
+## Dependencies
+The project uses the following Python libraries:
+- Streamlit
+- Pandas
+- NetworkX
+- PyVis
+- Plotly
+- st-aggrid
+- Google GenAI
+- Dotenv
+- ReportLab
+- FPDF
+- Matplotlib
+- Colorama
 
-## Development
-### Adding New Plugins
-1. Create a new class inheriting from `PluginBase`.
-2. Implement the `execute` method.
-3. Add the plugin to the CLI interface.
-
-### Testing
-Run unit tests:
-```bash
-python3 -m unittest discover src
-```
+## Contributing
+Contributions are welcome! Please follow these steps:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Submit a pull request with a detailed description of your changes.
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-Total nodes: 7470
-Total edges: 158559
+## Contact
+For questions or support, please contact:
+- **Ganesh Mysore**
+- GitHub: [ganeshmysoreDT](https://github.com/ganeshmysoreDT)
 
+## Acknowledgments
+- FDA Adverse Event Reporting System for data sources.
+- Contributors and developers who made this project possible.
 
-I dont need to build complete KG of all nodes and edges to make it accurate actually, visualizing that many nodes with edges will crash my browser/laptop... so instead i focus on subgraph-based analysis and targeted graph construction to improve performance and maintain accuracy
+## How the Project Was Built
 
-1. Use Subgraphs for Targeted Analysis: Instead of building the entire graph, dynamically construct subgraphs based on user input or specific queries
+### Data Processing
+The project begins with raw datasets sourced from the FDA Adverse Event Reporting System and other sources. These datasets include:
+- `drug_names.tsv`: Contains raw drug names.
+- `meddra_all_se.tsv`: Contains all reported side effects.
+- `meddra_freq.tsv`: Contains frequency data for side effects.
 
+These raw datasets are processed using `data_processing.py` to clean and structure the data into usable formats:
+- `drug_risk_scores.csv`: Contains risk scores for drugs on a scale of 0 to 1, where higher scores indicate greater risk.
+- `side_effects_clean.csv`: Maps drugs to their associated side effects, cleaned for analysis.
 
-AIzaSyAOJe_qdKZnKZBhgkOiyiS-r-PgoMIzPDw
+### Graph Construction
+Instead of building a complete knowledge graph (KG) with all nodes and edges, the project focuses on subgraph-based analysis to improve performance and maintain accuracy. Subgraphs are dynamically constructed using `graph_builder.py` based on user input or specific queries.
+
+### Risk Analysis
+`risk_analyzer.py` computes risk scores and identifies shared side effects between drugs. This module is essential for understanding drug safety and potential interactions.
+
+### Visualization
+Interactive visualizations are created using `visualize_graph.py` and Vis.js. These include:
+- Network graphs to explore drug-side effect relationships.
+- Bar charts to visualize risk scores.
+
+### Dashboard
+The Streamlit-based dashboard (`dashboard.py`) provides an interactive UI for:
+- Exploring drug-side effect relationships.
+- Viewing risk scores.
+- Detecting polypharmacy risks.
+
+### Command-Line Interface (CLI)
+`plugin.py` implements a CLI for performing various actions, including:
+- Risk analysis.
+- Hypothesis generation.
+- Graph visualization.
+- Data validation.
+
+### Hypothesis Generation
+The project uses AI-powered tools, such as Google GenAI, to generate scientifically validated hypotheses for drug combinations. This feature is implemented in `plugin.py` and integrated into the dashboard.
+
+### Datasets Used
+The project uses the following datasets:
+1. **Processed Data**:
+   - `drug_risk_scores.csv`: Contains risk scores for various drugs.
+   - `side_effects_clean.csv`: Contains cleaned data mapping drugs to their side effects.
+2. **Raw Data**:
+   - `drug_names.tsv`: Raw dataset of drug names.
+   - `meddra_all_se.tsv`: Raw dataset of all reported side effects.
+   - `meddra_freq.tsv`: Raw dataset of side effect frequencies.
+
+These datasets are essential for constructing subgraphs, analyzing risks, and generating visualizations.
+
+### Key Features
+1. **Subgraph-Based Analysis**:
+   - Focuses on targeted graph construction to improve performance and maintain accuracy.
+2. **Streamlit Dashboard**:
+   - Provides an interactive UI for exploring drug safety data.
+3. **Command-Line Interface**:
+   - Allows users to perform risk analysis and generate reports directly from the terminal.
+4. **Hypothesis Generation**:
+   - Uses AI-powered tools to generate scientific hypotheses for drug combinations.
+
+### Knowledge Graph Statistics
+The knowledge graph constructed by SideEffectNet contains:
+- **Total Nodes**: 7470
+- **Total Edges**: 158559
+
+These statistics highlight the scale of the graph and the depth of relationships analyzed within the project.
+
