@@ -4,8 +4,8 @@ st.set_page_config(
     layout="wide",
     page_icon="media/sideeffectnetlogo.png",  # Set the logo as the tab icon
     menu_items={
-        'Get Help': 'https://github.com/ganeshmysoreDT/SideEffectNet.git',
-        'Report a bug': "https://github.com/ganeshmysoreDT/SideEffectNet.git/issues",
+        'Get Help': 'https://github.com/ganeshmysoreDT/SideEffectNet',
+        'Report a bug': "https://github.com/ganeshmysoreDT/SideEffectNet/issues",
         'About': "# SideEffectNet: Drug Safety Analytics Platform"
     }
 )
