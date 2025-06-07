@@ -6,6 +6,5 @@ plotly
 google-genai
 dotenv
 reportlab
-fpdf
 matplotlib
 colorama
