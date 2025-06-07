@@ -325,34 +325,7 @@ with tab2:
                     ascending=[False, False]
                 )
 
-                # Consistent table theme
-                gb = GridOptionsBuilder.from_dataframe(sugg_df)
-                gb.configure_pagination(paginationAutoPageSize=True)
-                gb.configure_side_bar()
-                gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc='sum', editable=False)
-                for col in sugg_df.columns:
-                    gb.configure_column(col, header_name=col, editable=False, cellStyle={'backgroundColor': '#f9f9f9', 'color': '#333333'})
-                grid_options = gb.build()
-
-                AgGrid(
-                    sugg_df,
-                    gridOptions=grid_options,
-                    height=400,
-                    width='100%',
-                    data_return_mode='AS_INPUT',
-                    update_mode='MODEL_CHANGED',
-                    fit_columns_on_grid_load=True,
-                    theme='streamlit',
-                    custom_css={
-                        ".ag-body.ag-layout-normal": {
-                            "width": "100% !important",
-                            "height": "100% !important",
-                            "margin": "0",
-                            "padding": "0"
-                        }
-                    }
-                )
-
+                st.dataframe(sugg_df, use_container_width=True)
             else:
                 st.info("No safer alternatives with overlapping side effects found.")
     else:
@@ -417,33 +390,7 @@ with tab3:
 
     # Consistent table theme
     st.markdown("### Drug Risk Data")
-    gb = GridOptionsBuilder.from_dataframe(filtered)
-    gb.configure_pagination(paginationAutoPageSize=True)
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc='sum', editable=False)
-    for col in filtered.columns:
-        gb.configure_column(col, header_name=col, editable=False, cellStyle={'backgroundColor': '#f9f9f9', 'color': '#333333'})
-    grid_options = gb.build()
-
-
-    AgGrid(
-        filtered,
-        gridOptions=grid_options,
-        height=400,
-        width='100%',
-        data_return_mode='AS_INPUT',
-        update_mode='MODEL_CHANGED',
-        fit_columns_on_grid_load=True,
-        theme='streamlit',
-        custom_css={
-            ".ag-body.ag-layout-normal": {
-                "width": "100% !important",
-                "height": "100% !important",
-                "margin": "0",
-                "padding": "0"
-            }
-        }
-    )
+    st.dataframe(filtered, use_container_width=True)
 
 ############################################
 #  TAB 4: Polypharmacy Risk Detection
@@ -496,14 +443,14 @@ with tab4:
             max_score = max(risk_map.get(d, 0) for d in selected_drugs)
 
             st.markdown(f"""
-            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid #e1e4e8; margin-bottom: 1rem;">
+            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid blue; margin-bottom: 1rem;">
                 <div style="font-size: 1rem; color: #57606a;">Average Risk</div>
                 <div style="font-size: 1.5rem; font-weight: bold; color: blue;">{avg_score:.3f}</div>
             </div>
             """, unsafe_allow_html=True)
 
             st.markdown(f"""
-            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid #e1e4e8; margin-bottom: 1rem;">
+            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid red; margin-bottom: 1rem;">
                 <div style="font-size: 1rem; color: #57606a;">Highest Individual Risk</div>
                 <div style="font-size: 1.5rem; font-weight: bold; color: red;">{max_score:.3f}</div>
             </div>
@@ -511,14 +458,14 @@ with tab4:
 
         with col2:
             st.markdown(f"""
-            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid #e1e4e8; margin-bottom: 1rem;">
+            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid green; margin-bottom: 1rem;">
                 <div style="font-size: 1rem; color: #57606a;">Total Unique Side Effects</div>
                 <div style="font-size: 1.5rem; font-weight: bold; color: green;">{len(combined_effects)}</div>
             </div>
             """, unsafe_allow_html=True)
 
             st.markdown(f"""
-            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid #e1e4e8; margin-bottom: 1rem;">
+            <div style="border-radius: 0.5rem; padding: 1rem; background-color: #ffffff; border-left: 0.3rem solid orange; margin-bottom: 1rem;">
                 <div style="font-size: 1rem; color: #57606a;">Overlapping Side Effects</div>
                 <div style="font-size: 1.5rem; font-weight: bold; color: orange;">{len(overlap_effects) if overlap_effects else 0}</div>
             </div>
@@ -561,14 +508,17 @@ with tab4:
                     r=[risk_map[d]],
                     theta=[d],
                     fill='toself',
-                    name=d
+                    name=d,
+                    textfont=dict(color='black')  # Set text color to black
                 ))
             
+            # Update the horizontal axis numbers to make them black
             fig.update_layout(
                 polar=dict(
                     radialaxis=dict(
                         visible=True,
-                        range=[0, 1]
+                        range=[0, 1],
+                        tickfont=dict(color='black')  # Set tick font color to black
                     )
                 ),
                 showlegend=True,
