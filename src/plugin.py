@@ -62,6 +62,8 @@ class DrugRiskAnalysisPlugin(PluginBase):
 # Update the ElizaDashboardPlugin to use cleaned data from the workspace
 import pandas as pd
 import os
+import json
+import tempfile
 
 class ElizaDashboardPlugin(PluginBase):
     """
@@ -234,6 +236,34 @@ class ElizaDashboardPlugin(PluginBase):
         buffer.seek(0)
         return buffer
 
+def generate_graph_for_drug(drug_name, side_effect_lookup):
+        """
+        Generate graph visualization for a given drug and save it as an HTML file.
+        """
+        if drug_name not in side_effect_lookup:
+            return {"error": f"Drug '{drug_name}' not found in side effect lookup."}
+
+        side_effects = side_effect_lookup[drug_name]
+
+        # Construct graph data
+        from pyvis.network import Network
+        net = Network(height="600px", width="100%", bgcolor="#ffffff", font_color="#000000")
+
+        net.add_node(drug_name, color="#636EFA", size=30, title=f"Drug: {drug_name}")
+
+        for side_effect in side_effects:
+            net.add_node(side_effect, color="#EF553B", size=20, title=f"Side Effect: {side_effect}")
+            net.add_edge(drug_name, side_effect, color="#A3A3A3", width=2)
+
+        # Save graph visualization to an HTML file in the Downloads directory
+        import os
+        downloads_dir = os.path.join(os.path.expanduser("~"), "Downloads")
+        html_file_path = os.path.join(downloads_dir, f"{drug_name}_graph.html")
+        net.save_graph(html_file_path)
+
+        return html_file_path
+
+
 # Add additional plugins for the Eliza AI framework
 
 class DrugInteractionPlugin(PluginBase):
@@ -391,12 +421,40 @@ if __name__ == "__main__":
         result = cli.plugin.execute("validate_data", file_path)
         print(Fore.GREEN + str(result) + Style.RESET_ALL)
     elif action in ["generate_graph", "generate graph"]:
-        print(Fore.YELLOW + "Generate Graph: This action creates a graph visualization using PyVis based on the provided graph data." + Style.RESET_ALL)
-        graph_data_path = input(Fore.CYAN + "Enter the graph data file path: " + Style.RESET_ALL)
-        import json
-        with open(graph_data_path, "r") as f:
-            graph_data = json.load(f)
-        result = cli.plugin.execute("generate_graph", graph_data)
-        print(Fore.GREEN + str(result) + Style.RESET_ALL)
+        print(Fore.YELLOW + "Generate Graph: This action creates a graph visualization using PyVis based on the provided drug name." + Style.RESET_ALL)
+        drug_name = input(Fore.CYAN + "Enter the drug name: " + Style.RESET_ALL)
+        
+        graph_file_path = generate_graph_for_drug(drug_name, cli.plugin.side_effect_lookup)
+        if "error" in graph_file_path:
+            print(Fore.RED + graph_file_path["error"] + Style.RESET_ALL)
+        else:
+            print(Fore.GREEN + f"Graph visualization saved to {graph_file_path}" + Style.RESET_ALL)
+    else:
+        print(Fore.RED + "Unknown action." + Style.RESET_ALL)
+
+
+# Add prompt to enter drug names for hypothesis generation
+if __name__ == "__main__":
+    print(Fore.CYAN + "Welcome to the Eliza AI Framework!" + Style.RESET_ALL)
+    print(Fore.YELLOW + "This project provides intelligent scientific assistance for drug risk analysis and visualization." + Style.RESET_ALL)
+    print(Fore.GREEN + "Plugins available:" + Style.RESET_ALL)
+    print(Fore.MAGENTA + "- DrugRiskAnalysisPlugin: Analyze drug risk scores and side effects." + Style.RESET_ALL)
+    print(Fore.MAGENTA + "- DrugInteractionPlugin: Analyze interactions between drugs based on shared side effects." + Style.RESET_ALL)
+    print(Fore.MAGENTA + "- RiskVisualizationPlugin: Visualize risk scores using bar charts." + Style.RESET_ALL)
+    print(Fore.BLUE + "Visit our website for more information: https://github.com/your-repo" + Style.RESET_ALL)
+
+    cli = ElizaCLI()
+
+    # Prompt user for action
+    action = input(Fore.CYAN + "Enter action (analyze_risk, generate_hypotheses, generate_pdf, validate_data, generate_graph): " + Style.RESET_ALL).strip().lower()
+
+    if action in ["generate_graph", "generate graph"]:
+        print(Fore.YELLOW + "Generate Graph: This action creates a graph visualization using PyVis based on the provided drug name." + Style.RESET_ALL)
+        drug_name = input(Fore.CYAN + "Enter the drug name: " + Style.RESET_ALL)
+        graph_file_path = generate_graph_for_drug(drug_name, cli.plugin.side_effect_lookup)
+        if "error" in graph_file_path:
+            print(Fore.RED + graph_file_path["error"] + Style.RESET_ALL)
+        else:
+            print(Fore.GREEN + f"Graph visualization saved to {graph_file_path}" + Style.RESET_ALL)
     else:
         print(Fore.RED + "Unknown action." + Style.RESET_ALL)

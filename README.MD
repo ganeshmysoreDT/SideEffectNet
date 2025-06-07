@@ -21,15 +21,6 @@ sideeffectnet/
 │   │   ├── drug_names.tsv
 │   │   ├── meddra_all_se.tsv
 │   │   └── meddra_freq.tsv
-├── lib/
-│   ├── bindings/
-│   │   └── utils.js
-│   ├── tom-select/
-│   │   ├── tom-select.complete.min.js
-│   │   └── tom-select.css
-│   ├── vis-9.1.2/
-│   │   ├── vis-network.css
-│   │   └── vis-network.min.js
 ├── media/
 │   └── sideeffectnetlogo.png
 ├── notebooks/
