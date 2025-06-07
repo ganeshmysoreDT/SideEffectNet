@@ -3,7 +3,6 @@ pandas
 networkx
 pyvis
 plotly
-st-aggrid
 google-genai
 dotenv
 reportlab

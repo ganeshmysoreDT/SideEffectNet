@@ -23,7 +23,6 @@ sideeffectnet/
 │   │   └── meddra_freq.tsv
 ├── media/
 │   └── sideeffectnetlogo.png
-├── notebooks/
 ├── src/
 │   ├── analytics.py
 │   ├── dashboard.py
@@ -122,6 +121,8 @@ These raw datasets are processed using `data_processing.py` to clean and structu
 - `drug_risk_scores.csv`: Contains risk scores for drugs on a scale of 0 to 1, where higher scores indicate greater risk.
 - `side_effects_clean.csv`: Maps drugs to their associated side effects, cleaned for analysis.
 
+These datasets are essential for constructing subgraphs, analyzing risks, and generating visualizations.
+
 ### Graph Construction
 Instead of building a complete knowledge graph (KG) with all nodes and edges, the project focuses on subgraph-based analysis to improve performance and maintain accuracy. Subgraphs are dynamically constructed using `graph_builder.py` based on user input or specific queries.
 
@@ -129,7 +130,7 @@ Instead of building a complete knowledge graph (KG) with all nodes and edges, th
 `risk_analyzer.py` computes risk scores and identifies shared side effects between drugs. This module is essential for understanding drug safety and potential interactions.
 
 ### Visualization
-Interactive visualizations are created using `visualize_graph.py` and Vis.js. These include:
+Interactive visualizations are created using `visualize_graph.py`. These include:
 - Network graphs to explore drug-side effect relationships.
 - Bar charts to visualize risk scores.
 
@@ -148,18 +149,6 @@ The Streamlit-based dashboard (`dashboard.py`) provides an interactive UI for:
 
 ### Hypothesis Generation
 The project uses AI-powered tools, such as Google GenAI, to generate scientifically validated hypotheses for drug combinations. This feature is implemented in `plugin.py` and integrated into the dashboard.
-
-### Datasets Used
-The project uses the following datasets:
-1. **Processed Data**:
-   - `drug_risk_scores.csv`: Contains risk scores for various drugs.
-   - `side_effects_clean.csv`: Contains cleaned data mapping drugs to their side effects.
-2. **Raw Data**:
-   - `drug_names.tsv`: Raw dataset of drug names.
-   - `meddra_all_se.tsv`: Raw dataset of all reported side effects.
-   - `meddra_freq.tsv`: Raw dataset of side effect frequencies.
-
-These datasets are essential for constructing subgraphs, analyzing risks, and generating visualizations.
 
 ### Key Features
 1. **Subgraph-Based Analysis**:
