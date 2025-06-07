@@ -2,7 +2,7 @@ import streamlit as st
 st.set_page_config(
     page_title="SideEffectNet Dashboard", 
     layout="wide",
-    page_icon="💊",
+    page_icon="media/sideeffectnetlogo.png",  # Set the logo as the tab icon
     menu_items={
         'Get Help': 'https://github.com/your-repo',
         'Report a bug': "https://github.com/your-repo/issues",
@@ -151,7 +151,7 @@ with st.sidebar:
     st.markdown("Data source: FDA Adverse Event Reporting System")
 
 # Main content
-st.title("💊 SideEffectNet: Drug Safety Analytics")
+st.title("SideEffectNet: Drug Safety Analytics")
 st.markdown("Explore drug-side effect relationships, risk scores, and polypharmacy risks.")
 
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
