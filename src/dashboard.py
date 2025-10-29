@@ -153,7 +153,7 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     " Drug Lookup", 
     " Safer Alternatives", 
     " Risk Explorer", 
-    "️ Polypharmacy", 
+    " Polypharmacy", 
     " Critical Nodes",
     " Risk Hypotheses"
 ])
@@ -479,7 +479,7 @@ with tab4:
             """, unsafe_allow_html=True)
             
             if len(selected_drugs) > 2:
-                st.warning("️ Combining more than 2 drugs increases risk exponentially")
+                st.warning(" Combining more than 2 drugs increases risk exponentially")
         
         # Visualizations
         tab1, tab2 = st.tabs(["Side Effect Overlap", "Risk Comparison"])
