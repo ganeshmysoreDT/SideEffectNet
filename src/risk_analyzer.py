@@ -42,7 +42,7 @@ def export_risk_scores(graph, output_csv="drug_risk_scores.csv"):
     df = pd.DataFrame(drug_data)
     df = df.sort_values(by='risk_score', ascending=False)
     df.to_csv(output_csv, index=False)
-    print(f"[✓] Drug risk scores saved to: {output_csv}")
+    print(f"[INFO] Drug risk scores saved to: {output_csv}")
 
 def visualize_risk_scores(csv_path, output_html="risk_scores_graph.html"):
     df = pd.read_csv(csv_path)
